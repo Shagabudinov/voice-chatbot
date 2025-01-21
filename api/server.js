@@ -7,8 +7,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import OpenAI from 'openai';
-import { getRoleConfig, DEFAULT_ROLE } from './config/roles.js';
-import { logEvent } from './utils/logger.js';
+import { getRoleConfig, DEFAULT_ROLE } from '../config/roles.js';
+import { logEvent } from '../utils/logger.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -57,11 +57,11 @@ app.use(cors());
 app.use(express.json());
 
 // Раздача статических файлов из public/
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Папка temp/ будет хранить временные .mp3-файлы.
 // Готовые ссылки на них можно раздавать:
-app.use('/audio', express.static(path.join(__dirname, 'temp')));
+app.use('/audio', express.static(path.join(__dirname, '../temp')));
 
 // ----------- Хранение чата в памяти -----------
 // sessions[sessionId] = { role: string, messages: array }
