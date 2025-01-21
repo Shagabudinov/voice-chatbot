@@ -1,0 +1,96 @@
+# Общие исключения для всех проектов
+.DS_Store
+Thumbs.db
+*.log
+*.env
+.env.*
+*.swp
+*.tmp
+*.bak
+*.pid
+*.seed
+*.sublime-workspace
+*.sublime-project
+.idea/
+.vscode/
+node_modules/
+dist/
+build/
+coverage/
+*.iml
+*.lock
+*.sqlite
+logs/
+temp/
+
+# Исключения для Node.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/.pnpm-debug.log*
+/.npm/
+.nvmrc
+*.tgz
+
+# Исключения для фронтенда (React, Vue, Angular и т.д.)
+/public/*.hot-update.json
+/.next/
+/.next/
+/nuxt/
+/.nuxt/
+/vuepress/dist/
+/.storybook-out/
+/.husky/
+out/
+
+# Исключения для TypeScript
+*.tsbuildinfo
+
+# Исключения для Python (если используется в бэкенде)
+/*.pyc
+/__pycache__/
+/.mypy_cache/
+/.pytest_cache/
+/.env
+/.venv
+*.pyo
+
+# Исключения для Django (если используется)
+**/db.sqlite3
+/static/
+/media/
+
+# Исключения для Docker
+*.pid
+*.seed
+*.sqlite
+docker-compose.override.yml
+/docker-compose.override.*
+
+# Исключения для тестов
+/junit-reports/
+test-results/
+test-output/
+
+# Исключения для IDE
+/.project
+/.classpath
+/.settings/
+/.cache/
+/.target/
+*.class
+
+# Исключения для базы данных (если используется в локальном режиме)
+*.sqlite3
+*.db
+
+# Исключения для AWS/Cloud
+.aws/
+secrets.json
+
+# Исключения для CI/CD
+/.github/workflows/*.yml
+/.circleci/
+.jenkins/
+.gitlab-ci.yml
+bitbucket-pipelines.yml

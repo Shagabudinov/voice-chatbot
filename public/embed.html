@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Голосовой Помощник</title>
+    <link href="/styles.css" rel="stylesheet">
+</head>
+<body class="bg-transparent">
+    <!-- Плавающая кнопка -->
+    <div id="chat-trigger" 
+         class="fixed bottom-6 right-6 cursor-pointer">
+        <!-- Пульсирующий фон -->
+        <div class="absolute inset-0 bg-blue-500/20 rounded-full pulse-ring"></div>
+        <!-- Основная кнопка -->
+        <button class="chat-trigger-btn flex items-center gap-3">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+            </svg>
+            <span class="font-medium">Голосовой помощник</span>
+        </button>
+    </div>
+
+    <!-- Интерфейс записи (всплывающее окно) -->
+    <div id="chat-interface" 
+         class="fixed bottom-24 right-6 hidden max-w-sm w-full">
+        <div class="chat-popup p-6 mx-4">
+            <!-- Заголовок -->
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-semibold text-gray-800">Голосовой помощник</h3>
+                <button id="close-btn" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Индикатор записи -->
+            <div class="record-button mb-6" id="record-button">
+                <!-- Индикатор записи (красный) -->
+                <div id="recording-indicator" class="hidden relative w-full h-full">
+                    <div class="absolute inset-0 bg-red-500/20 rounded-full animate-ping"></div>
+                    <div class="absolute inset-2 bg-red-500/40 rounded-full animate-pulse"></div>
+                    <div class="absolute inset-4 bg-red-500 rounded-full flex items-center justify-center">
+                        <div id="audio-level" class="audio-level-indicator"></div>
+                        <svg class="w-8 h-8 text-white relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h14v14H5z" />
+                        </svg>
+                    </div>
+                </div>
+                <!-- Кнопка начала записи (синяя) -->
+                <div id="start-indicator">
+                    <div class="absolute inset-0 bg-blue-500/20 rounded-full"></div>
+                    <div class="absolute inset-2 bg-blue-500/40 rounded-full"></div>
+                    <div class="absolute inset-4 bg-blue-500 rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Статус -->
+            <div class="text-center">
+                <p id="status-text" class="status-text mb-2">
+                    Нажмите на микрофон, чтобы начать
+                </p>
+                <p class="text-sm text-gray-500">
+                    Говорите после начала записи. Помощник ответит голосом
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/lamejs@1.2.1/lame.min.js"></script>
+    <script src="/embed.js"></script>
+</body>
+</html> 

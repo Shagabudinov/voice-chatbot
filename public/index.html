@@ -1,0 +1,98 @@
+<!-- public/index.html -->
+
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Голосовой ChatGPT Бот</title>
+    <link href="/styles.css" rel="stylesheet">
+  </head>
+  <body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <div class="max-w-2xl mx-auto p-4 bg-white rounded-xl shadow-lg">
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          Голосовой ChatGPT Бот
+        </h1>
+        <div class="flex gap-2">
+          <button id="mute-btn" 
+                  class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-sm rounded-lg transition-colors duration-200 flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+            </svg>
+            <span>Без звука</span>
+          </button>
+          <button id="clear-btn" 
+                  class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm rounded-lg transition-colors duration-200 flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+            Очистить
+          </button>
+        </div>
+      </div>
+
+      <div id="chat-box" 
+           class="h-[calc(100vh-300px)] overflow-y-auto border border-gray-100 rounded-xl mb-6 flex flex-col space-y-3 p-4 bg-gray-50 scroll-smooth">
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="flex-1 relative">
+          <input
+            id="text-input"
+            type="text"
+            placeholder="Введите сообщение..."
+            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+          />
+        </div>
+        <button
+          id="send-btn"
+          class="p-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl transition-colors duration-200"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+          </svg>
+        </button>
+        <button
+          id="voice-btn"
+          class="p-3 bg-green-500 hover:bg-green-600 text-white rounded-xl transition-colors duration-200"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Модернизированная модалка записи голоса -->
+    <div id="record-modal" 
+         class="fixed inset-0 bg-black/50 backdrop-blur-sm items-center justify-center hidden transition-all duration-300">
+      <div class="bg-white rounded-2xl p-8 shadow-2xl max-w-md w-full mx-4 transform transition-all duration-300">
+        <div class="relative w-24 h-24 mx-auto mb-6">
+          <div class="absolute inset-0 bg-red-500/20 rounded-full animate-ping"></div>
+          <div class="absolute inset-2 bg-red-500/40 rounded-full animate-pulse"></div>
+          <div class="absolute inset-4 bg-red-500 rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+            </svg>
+          </div>
+        </div>
+        <p class="text-xl font-medium text-center mb-6" id="record-status">
+          Идёт запись...
+        </p>
+        <button id="stop-record-btn" 
+                class="w-full py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl transition-colors duration-200 flex items-center justify-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
+          </svg>
+          Остановить запись
+        </button>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lamejs@1.2.1/lame.min.js"></script>
+  </body>
+</html>
